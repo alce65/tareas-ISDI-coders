@@ -1,5 +1,5 @@
-import createMenu from '../../js/menu.js';
 import Component from './component.js';
+import Menu from './menu.js';
 
 export default class Header extends Component {
   constructor(selector = '') {
@@ -9,13 +9,13 @@ export default class Header extends Component {
       { path: 'index.html', label: 'Tareas' },
       { path: 'about.html', label: 'Nosotros' },
     ];
-    this.menu = createMenu(this.menuItems);
-    this.template = '';
-    this.#createRender();
+    this.menu = new Menu(this.menuItems).createTemplate();
+    this.template = this.#createRender();
+    this.render(this.selector, this.template);
   }
 
   #createRender() {
-    this.template = `
+    const template = `
       <div class="header__logo">
         <img
           class="header__logo-image"
@@ -28,6 +28,6 @@ export default class Header extends Component {
         ${this.menu}
       </div>
       `;
-    this.render(this.selector, this.template);
+    return template;
   }
 }

@@ -5,6 +5,10 @@ export default class Component {
   render(selector, template) {
     const node = document.querySelector(selector);
     node.innerHTML = template;
-    //node.outerHTML
+  }
+
+  renderOuter(selector, template) {
+    const node = document.querySelector(selector);
+    node.outerHTML = template;
   }
 }

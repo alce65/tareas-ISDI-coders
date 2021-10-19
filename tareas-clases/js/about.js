@@ -1,10 +1,10 @@
-import renderHeader from './header.js';
-import renderFooter from './footer.js';
+import Header from './header.js';
+import Footer from './footer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('About loaded');
-  renderHeader('.header');
-  renderFooter('#footer');
+  new Header('.header');
+  new Footer('#footer');
 });
 
 /* function app() {
