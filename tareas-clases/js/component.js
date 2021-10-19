@@ -1,5 +1,6 @@
 export default class Component {
   constructor() {
+    this.selector;
     this.template;
   }
   render(selector, template) {

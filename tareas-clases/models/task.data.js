@@ -1,8 +1,8 @@
-import Task from './task.model.js';
+import TaskModel from './task.model.js';
 
-export const aTasks = [
-  new Task('Tarea 1', 'Pepe'),
-  new Task('Tarea 2', 'Ernesto'),
-  new Task('Tarea 3', 'Elena'),
-  new Task('Tarea 4', 'Susana'),
+export const TASKS = [
+  new TaskModel('Tarea 1', 'Pepe'),
+  new TaskModel('Tarea 2', 'Ernesto'),
+  new TaskModel('Tarea 3', 'Elena'),
+  new TaskModel('Tarea 4', 'Susana'),
 ];
