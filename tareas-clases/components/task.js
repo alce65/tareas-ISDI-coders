@@ -1,12 +1,13 @@
 import { TASKS } from '../models/task.data.js';
 import TaskModel from '../models/task.model.js';
+import StoreTasks from '../services/store.js';
 import Component from './component.js';
 
 export default class Task extends Component {
   constructor(selector) {
     super();
     this.selector = selector;
-    this.taskList = TASKS;
+    this.taskList = StoreTasks.getTasks();
     this.#updateComponent();
   }
 
@@ -66,7 +67,7 @@ export default class Task extends Component {
       this.taskList.push(
         new TaskModel(inputElements[0].value, inputElements[1].value)
       );
-      console.log(this.taskList);
+      StoreTasks.setTasks(this.taskList);
       this.#updateComponent();
     });
   }
@@ -83,12 +84,13 @@ export default class Task extends Component {
       item.addEventListener('change', (ev) => {
         this.taskList[ev.target.dataset.index].isCompleted =
           !this.taskList[ev.target.dataset.index].isCompleted;
-        console.log(this.taskList);
+        StoreTasks.setTasks(this.taskList);
       });
     });
     deleteElements.forEach((item) => {
       item.addEventListener('click', (ev) => {
         this.taskList.splice(ev.target.dataset.index, 1);
+        StoreTasks.setTasks(this.taskList);
         this.#updateComponent();
       });
     });
