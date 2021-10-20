@@ -1,5 +1,5 @@
-import Header from './header.js';
-import Footer from './footer.js';
+import Header from '../components/header.js';
+import Footer from '../components/footer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('About loaded');

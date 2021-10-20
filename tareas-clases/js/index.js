@@ -1,6 +1,6 @@
-import Header from './header.js';
-import Footer from './footer.js';
-import Task from './task.js';
+import Header from '../components/header.js';
+import Footer from '../components/footer.js';
+import Task from '../components/task.js';
 
 function app() {
   console.log('Index loaded');

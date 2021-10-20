@@ -88,6 +88,12 @@ between header and footer and can grow indefinitely.
   padding-right: 1rem;
 }
 
+.task__delete-button {
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: 900;
+}
+
 @media screen and (min-width: 680px) {
   .header {
     flex-direction: row;
