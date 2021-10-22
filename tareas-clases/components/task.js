@@ -1,6 +1,6 @@
-import { TASKS } from '../models/task.data.js';
 import TaskModel from '../models/task.model.js';
 import StoreTasks from '../services/store.js';
+import AddTask from './add-task.js';
 import Component from './component.js';
 
 export default class Task extends Component {
@@ -9,37 +9,23 @@ export default class Task extends Component {
     this.selector = selector;
     this.taskList = StoreTasks.getTasks();
     this.#updateComponent();
+    new AddTask('#formAddTask', this.handlerSubmit.bind(this));
   }
 
   #updateComponent() {
     console.log(this.taskList);
     this.template = this.#createTemplate();
     this.render(this.selector, this.template);
-    this.#manageForm();
+
+    // this.#manageForm();
+    new AddTask('#formAddTask', this.handlerSubmit.bind(this));
     this.#manageList();
   }
 
   #createTemplate() {
-    let formAddTask = `
-      <h3>Añadir tarea</h3>
-      <form>
-        <div class="form-group">
-          <label for="task-title">Titulo</label>
-          <input type="text"
-            class="form-control" name="task-title" id="task-title">
-        </div>
-        <div class="form-group">
-          <label for="task-responsible">Responsable</label>
-          <input type="text"
-            class="form-control" name="task-responsible" id="task-responsible">
-        </div>
-        <button type="submit">Añadir</button>
-      </form>
-    `;
-
     let template = `
     <h2>Lista de tareas</h2>
-    ${formAddTask}
+    <div id="formAddTask"></div>
     <ul>`;
     this.taskList.forEach((item, i) => {
       template += `<li>
@@ -56,20 +42,14 @@ export default class Task extends Component {
     return template;
   }
 
-  #manageForm() {
-    const componentElement = document.querySelector(this.selector);
-    const inputElements =
-      componentElement.querySelectorAll('input[type="text"]');
-    const formElement = componentElement.querySelector('form');
-    formElement.addEventListener('submit', (ev) => {
-      console.log(ev);
-      ev.preventDefault();
-      this.taskList.push(
-        new TaskModel(inputElements[0].value, inputElements[1].value)
-      );
-      StoreTasks.setTasks(this.taskList);
-      this.#updateComponent();
-    });
+  handlerSubmit(ev, inputElements) {
+    console.log(ev);
+    ev.preventDefault();
+    this.taskList.push(
+      new TaskModel(inputElements[0].value, inputElements[1].value)
+    );
+    StoreTasks.setTasks(this.taskList);
+    this.#updateComponent();
   }
 
   #manageList() {
@@ -81,18 +61,22 @@ export default class Task extends Component {
       '.task__delete-button'
     );
     checkElements.forEach((item) => {
-      item.addEventListener('change', (ev) => {
-        this.taskList[ev.target.dataset.index].isCompleted =
-          !this.taskList[ev.target.dataset.index].isCompleted;
-        StoreTasks.setTasks(this.taskList);
-      });
+      item.addEventListener('change', this.handlerCheck.bind(this));
     });
     deleteElements.forEach((item) => {
-      item.addEventListener('click', (ev) => {
-        this.taskList.splice(ev.target.dataset.index, 1);
-        StoreTasks.setTasks(this.taskList);
-        this.#updateComponent();
-      });
+      item.addEventListener('click', this.handlerClickDelete.bind(this));
     });
+  }
+
+  handlerCheck(ev) {
+    this.taskList[ev.target.dataset.index].isCompleted =
+      !this.taskList[ev.target.dataset.index].isCompleted;
+    StoreTasks.setTasks(this.taskList);
+  }
+
+  handlerClickDelete(ev) {
+    this.taskList.splice(ev.target.dataset.index, 1);
+    StoreTasks.setTasks(this.taskList);
+    this.#updateComponent();
   }
 }

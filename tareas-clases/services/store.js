@@ -1,13 +1,11 @@
 import { TASKS } from '../models/task.data.js';
-
-const storeName = 'Tareas';
-
 export default class StoreTasks {
+  static storeName = 'Tareas';
   static getTasks() {
-    /* return localStorage.getItem(storeName)
-      ? JSON.parse(localStorage.getItem(storeName))
+    /* return localStorage.getItem(this.storeName)
+      ? JSON.parse(localStorage.getItem(this.storeName))
       : TASKS; */
-    let data = localStorage.getItem(storeName);
+    let data = localStorage.getItem(this.storeName);
     if (data) {
       data = JSON.parse(data);
     } else {
@@ -18,10 +16,10 @@ export default class StoreTasks {
   }
 
   static setTasks(tasks) {
-    localStorage.setItem(storeName, JSON.stringify(tasks));
+    localStorage.setItem(this.storeName, JSON.stringify(tasks));
   }
 
   static removeTasks() {
-    localStorage.removeItem(storeName);
+    localStorage.removeItem(this.storeName);
   }
 }

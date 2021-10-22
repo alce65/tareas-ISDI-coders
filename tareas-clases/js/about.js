@@ -1,5 +1,6 @@
 import Header from '../components/header.js';
 import Footer from '../components/footer.js';
+import VCard from '../components/v-card.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('About loaded');
